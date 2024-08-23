@@ -1,0 +1,14 @@
+{
+    "name": "my-pwa",
+    "version": "1.0.0",
+    "description": "Una Progressive Web App",
+    "main": "index.js",
+    "scripts": {
+      "start": "lite-server"
+    },
+    "author": "Tu Nombre",
+    "license": "ISC",
+    "devDependencies": {
+      "lite-server": "^2.6.1"
+    }
+  }
