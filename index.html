@@ -29,152 +29,159 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
-<?!= HtmlService.createHtmlOutputFromFile('HOJAESTILOS').getContent(); ?>
-<?!= HtmlService.createHtmlOutputFromFile('HOJAESTILOS_MOBIL').getContent(); ?>
-
 
 
 
 <script>
   //VARIABLES GLOBALES DEL SCRIPT
-    var numeroFila;
-    var columnaInicial = 2;
-    var cantidadColumnas = 38;
-    var valoresObtenidosFila;
-    
+  var numeroFila;
+  var columnaInicial = 2;
+  var cantidadColumnas = 38;
+  var valoresObtenidosFila;
+
   function ocultarCarga() {
-      document.getElementById("loading").style.display = "none";
-      document.querySelectorAll(".container, .ocultable,.header").forEach(el => el.style.display = "flex");
+    document.getElementById("loading").style.display = "none";
+    document.querySelectorAll(".container, .ocultable,.header").forEach(el => el.style.display = "flex");
   }
 
-    function mostrarCarga() {
-      document.getElementById("loading").style.display = "flex";
-      document.querySelectorAll(".container, .ocultable,.header").forEach(el => el.style.display = "none");
+  function mostrarCarga() {
+    document.getElementById("loading").style.display = "flex";
+    document.querySelectorAll(".container, .ocultable,.header").forEach(el => el.style.display = "none");
   }
 
-    // FUNCION **********************************************************************************************************************************************************
+  // FUNCION **********************************************************************************************************************************************************
 
-    function obtenerDatos() {
+  function obtenerDatos() {
     // Mostrar carga mientras se obtienen los datos
     mostrarCarga();
 
     $.getJSON("https://script.google.com/macros/s/AKfycbxQjLjXHEmV0aId-pncSbvviaBNg7AEuqw4G0Uyt-RSLbKgSvhrSKRA6xamiY8UhbYG/exec", function (data) {
-        console.log("Datos recibidos:", data); // Depurar los datos recibidos
+      console.log("Datos recibidos:", data); // Depurar los datos recibidos
 
-        // Ocultar carga después de recibir los datos
-        ocultarCarga();
+      // Ocultar carga después de recibir los datos
+      ocultarCarga();
 
-        // Configurar autocompletado para los campos CUENTA_DE_OPERACION y CUENTA_DESTINO
-        $(document).ready(function() {
-    var selectedIndex; // Definir la variable aquí
+      // Configurar autocompletado para los campos CUENTA_DE_OPERACION y CUENTA_DESTINO
+      $(document).ready(function () {
+        var selectedIndex; // Definir la variable aquí
 
-          $('#CUENTA_DE_OPERACION, #CUENTA_DESTINO').autocomplete({
-              source: function (request, response) {
-                  var term = request.term.toLowerCase(); // Convertir el término de búsqueda a minúsculas
-                  var results = [];
+        $('#CUENTA_DE_OPERACION, #CUENTA_DESTINO').autocomplete({
+          source: function (request, response) {
+            var term = request.term.toLowerCase(); // Convertir el término de búsqueda a minúsculas
+            var results = [];
 
-                  // Filtrar los resultados basados en el término de búsqueda
-                  $.each(data, function (index, item) {
-                      if (typeof item === 'string' && item.toLowerCase().indexOf(term) >= 0) {
-                          results.push(item);
-                      }
-                  });
-
-                  response(results.slice(0, 10)); // Mostrar hasta 10 resultados
-              },
-              minLength: 1, // Mínimo de caracteres para activar el autocompletado
-              select: function (event, ui) {
-                  // Acción al seleccionar un elemento del autocompletado
-                  console.log("Seleccionado:", ui.item.value);
-                  selectedIndex = data.indexOf(ui.item.value) + 3; // Índice basado en 1 para Google Sheets (ajustar si es necesario)
-                  mostrarCarga();
-
-                  // Llamar a la función de Google Apps Script para obtener datos adicionales
-                  $.getJSON("https://script.google.com/macros/s/AKfycbyK-N783kcqJtjRaU_6CbFpJh96AhqIzYrhOZ-dziB8lZSX4tVr780rjY1gBx6HVH0Z/exec", { indice: selectedIndex }, function (data) {
-                      console.log("Datos recibidos:", data); // Depurar los datos recibidos
-
-                      // Ocultar carga después de recibir los datos
-                      ocultarCarga();
-
-                      // Actualizar el valor del campo con el dato obtenido
-                      document.getElementById("SALDO_DISPONIBLE").value = data;
-                  }).fail(function(jqXHR, textStatus, errorThrown) {
-                      console.error("Error al obtener datos:", textStatus, errorThrown);
-                      ocultarCarga();
-                  });
+            // Filtrar los resultados basados en el término de búsqueda
+            $.each(data, function (index, item) {
+              if (typeof item === 'string' && item.toLowerCase().indexOf(term) >= 0) {
+                results.push(item);
               }
-          });
+            });
+
+            response(results.slice(0, 10)); // Mostrar hasta 10 resultados
+          },
+          minLength: 1, // Mínimo de caracteres para activar el autocompletado
+          select: function (event, ui) {
+            // Acción al seleccionar un elemento del autocompletado
+            console.log("Seleccionado:", ui.item.value);
+            selectedIndex = data.indexOf(ui.item.value) + 3; // Índice basado en 1 para Google Sheets (ajustar si es necesario)
+            mostrarCarga();
+
+            // Llamar a la función de Google Apps Script para obtener datos adicionales
+            $.getJSON("https://script.google.com/macros/s/AKfycbyK-N783kcqJtjRaU_6CbFpJh96AhqIzYrhOZ-dziB8lZSX4tVr780rjY1gBx6HVH0Z/exec", { indice: selectedIndex }, function (data) {
+              console.log("Datos recibidos:", data); // Depurar los datos recibidos
+
+              // Ocultar carga después de recibir los datos
+              ocultarCarga();
+
+              // Actualizar el valor del campo con el dato obtenido
+              document.getElementById("SALDO_DISPONIBLE").value = data;
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+              console.error("Error al obtener datos:", textStatus, errorThrown);
+              ocultarCarga();
+            });
+          }
+        });
       });
 
 
     }); // Eliminar .obtenerDatosJSON()
-}
+  }
 
 
 
 
 
 
-    // FUNCION **********************************************************************************************************************************************************
+  // FUNCION **********************************************************************************************************************************************************
 
 
-    $(document).ready(function() {
+  $(document).ready(function () {
 
-      // Llama a otras funciones o realiza otras acciones
-      mostrarCarga();
-      obtenerDatos();
-    });
-
-
-    // FUNCION **********************************************************************************************************************************************************
-
-    //PROCESAR LOS DATOS EN LOS INPUTS DEL DOM PARA ENVIARLOS A LA BASE DE DATOS
-    function ProcesarInputsEnviar() {
-        mostrarCarga();
-
-        // Variables necesarias para la función
-        var valoresObtenidosFila = new Array(7).fill("");
-        var datosModificados = valoresObtenidosFila.slice(); // Crear una copia del array 'valores'
+    // Llama a otras funciones o realiza otras acciones
+    mostrarCarga();
+    obtenerDatos();
+  });
 
 
-        datosModificados[0] = document.getElementById("CATEGORIA").value.trim();
-        document.getElementById("CATEGORIA").value = "";
+  // FUNCION **********************************************************************************************************************************************************
 
-        datosModificados[1] = document.getElementById("CONCEPTO").value.trim();
-        document.getElementById("CONCEPTO").value = "";
+  //PROCESAR LOS DATOS EN LOS INPUTS DEL DOM PARA ENVIARLOS A LA BASE DE DATOS
+  function ProcesarInputsEnviar() {
+    mostrarCarga();
 
-        // Modificar los valores y limpiar los inputs
-        datosModificados[2] = document.getElementById("CANTIDAD_DE_OPERACION").value.trim();
-        document.getElementById("CANTIDAD_DE_OPERACION").value = "";
-
-        datosModificados[3] = document.getElementById("TIPO_DE_OPERACION").value.trim();
-        document.getElementById("TIPO_DE_OPERACION").value = "";
-
-        datosModificados[4] = document.getElementById("CUENTA_DE_OPERACION").value.trim();
-        document.getElementById("CUENTA_DE_OPERACION").value = "";
-
-        datosModificados[5] = document.getElementById("CUENTA_DESTINO").value.trim();
-        document.getElementById("CUENTA_DESTINO").value = "";
+    // Variables necesarias para la función
+    var valoresObtenidosFila = new Array(7).fill("");
+    var datosModificados = valoresObtenidosFila.slice(); // Crear una copia del array 'valores'
 
 
-        document.getElementById("SALDO_DISPONIBLE").value = "";
-        
+    datosModificados[0] = document.getElementById("CATEGORIA").value.trim();
+    document.getElementById("CATEGORIA").value = "";
+
+    datosModificados[1] = document.getElementById("CONCEPTO").value.trim();
+    document.getElementById("CONCEPTO").value = "";
+
+    // Modificar los valores y limpiar los inputs
+    datosModificados[2] = document.getElementById("CANTIDAD_DE_OPERACION").value.trim();
+    document.getElementById("CANTIDAD_DE_OPERACION").value = "";
+
+    datosModificados[3] = document.getElementById("TIPO_DE_OPERACION").value.trim();
+    document.getElementById("TIPO_DE_OPERACION").value = "";
+
+    datosModificados[4] = document.getElementById("CUENTA_DE_OPERACION").value.trim();
+    document.getElementById("CUENTA_DE_OPERACION").value = "";
+
+    datosModificados[5] = document.getElementById("CUENTA_DESTINO").value.trim();
+    document.getElementById("CUENTA_DESTINO").value = "";
 
 
-        // Agregar la fecha actual
-        datosModificados.unshift(new Date().toLocaleString());
-
-        console.log("LOS DATOS QUE SE VAN A SUBIR A SHEETS SON = ", datosModificados);
-
-        // Llamar a Google Apps Script para registrar los datos en Sheets
-        google.script.run
-            .withSuccessHandler(ocultarCarga) // Manejador de éxito
-            .registrarDatos(datosModificados);
-    }
+    document.getElementById("SALDO_DISPONIBLE").value = "";
 
 
 
-    // FUNCION **********************************************************************************************************************************************************
+    // Agregar la fecha actual
+    datosModificados.unshift(new Date().toLocaleString());
+
+    console.log("LOS DATOS QUE SE VAN A SUBIR A SHEETS SON = ", datosModificados);
+
+    $.ajax({
+        url: 'https://script.google.com/macros/s/AKfycbxo-3aRvlzmjABKUScaz146gTZhaiWYRyvsgaQ7G9FI9fZnTnR8bGMAXzDPGFVNjG6z/exec',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(datosModificados),
+        success: function(response) {
+            console.log("Datos registrados:", response);
+            ocultarCarga();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error al registrar datos:", textStatus, errorThrown);
+            ocultarCarga();
+        }
+    }); 
+  }
+
+
+
+  // FUNCION **********************************************************************************************************************************************************
 
 </script>
 
@@ -196,7 +203,9 @@
   </div>
 
   <div id="loading">
-    <img src="https://lh3.googleusercontent.com/pw/AP1GczMJNN-OvLLx7Cb6ZdWSDlYinaG4HWTaUH5qH8GBE3GwISE4VizJmBvfVLWeiYq92FWilb0qMwOc5Ta8Pn1mUMiodL-yWhZZf19ChS8PKuxe4a5B058=w2400" alt="Loading Image" width="300px" class="CARGANDO_GIF">
+    <img
+      src="https://lh3.googleusercontent.com/pw/AP1GczMJNN-OvLLx7Cb6ZdWSDlYinaG4HWTaUH5qH8GBE3GwISE4VizJmBvfVLWeiYq92FWilb0qMwOc5Ta8Pn1mUMiodL-yWhZZf19ChS8PKuxe4a5B058=w2400"
+      alt="Loading Image" width="300px" class="CARGANDO_GIF">
     <span class="CARGANDO_text">Cargando...</span>
   </div>
 
@@ -213,43 +222,43 @@
   <div class="container">
     <label for="CATEGORIA">CATEGORIA</label>
     <select id="CATEGORIA">
-        <option value=""> SELLECIONA UNA OPCIÓN</option> 
-        <option value="AHORRO BABILONICO">AHORRO BABILONICO</option>
-        <option value="BEBIDAS">BEBIDAS</option>
-        <option value="CALIBRAR">CALIBRAR</option>
-        <option value="CARRO">CARRO</option>
-        <option value="CELULAR">CELULAR</option>
-        <option value="COCO">COCO</option>
-        <option value="COMIDA">COMIDA</option>
-        <option value="COSAS QUE QUIERO">COSAS QUE QUIERO</option>
-        <option value="CUIDADO PERSONAL">CUIDADO PERSONAL</option>
-        <option value="DISTRIBUCIÓN DE GASTOS">DISTRIBUCIÓN DE GASTOS</option>
-        <option value="DONACIÓN">DONACIÓN</option>
-        <option value="EFECTIVO">EFECTIVO</option>
-        <option value="EMERGENCIAS">EMERGENCIAS</option>
-        <option value="ESTACIONAMIENTO">ESTACIONAMIENTO</option>
-        <option value="GASOLINA">GASOLINA</option>
-        <option value="GOOGLE ONE">GOOGLE ONE</option>
-        <option value="INGRESO">INGRESO</option>
-        <option value="INGRESOS">INGRESOS</option>
-        <option value="INVERSIONES">INVERSIONES</option>
-        <option value="MOR A 55">MOR A 55</option>
-        <option value="OBSEQUIOS">OBSEQUIOS</option>
-        <option value="PAGO DEUDA MERCADO PAGO">PAGO DEUDA MERCADO PAGO</option>
-        <option value="PAGO PRESTAMO MOR">PAGO PRESTAMO MOR</option>
-        <option value="PRESTAMO MOR">PRESTAMO MOR</option>
-        <option value="QUINCENA">QUINCENA</option>
-        <option value="RENDIMIENTO">RENDIMIENTO</option>
-        <option value="RETIRO EFECTIVO">RETIRO EFECTIVO</option>
-        <option value="SALDO PLUXEE">SALDO PLUXEE</option>
-        <option value="SALUD">SALUD</option>
-        <option value="SOCIAL">SOCIAL</option>
-        <option value="TDC - ABONO">TDC - ABONO</option>
-        <option value="TDC - AHORRO">TDC - AHORRO</option>
-        <option value="TDC - CARGO">TDC - CARGO</option>
-        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
-        <option value="TRANSPORTE">TRANSPORTE</option>
-      </select>
+      <option value=""> SELLECIONA UNA OPCIÓN</option>
+      <option value="AHORRO BABILONICO">AHORRO BABILONICO</option>
+      <option value="BEBIDAS">BEBIDAS</option>
+      <option value="CALIBRAR">CALIBRAR</option>
+      <option value="CARRO">CARRO</option>
+      <option value="CELULAR">CELULAR</option>
+      <option value="COCO">COCO</option>
+      <option value="COMIDA">COMIDA</option>
+      <option value="COSAS QUE QUIERO">COSAS QUE QUIERO</option>
+      <option value="CUIDADO PERSONAL">CUIDADO PERSONAL</option>
+      <option value="DISTRIBUCIÓN DE GASTOS">DISTRIBUCIÓN DE GASTOS</option>
+      <option value="DONACIÓN">DONACIÓN</option>
+      <option value="EFECTIVO">EFECTIVO</option>
+      <option value="EMERGENCIAS">EMERGENCIAS</option>
+      <option value="ESTACIONAMIENTO">ESTACIONAMIENTO</option>
+      <option value="GASOLINA">GASOLINA</option>
+      <option value="GOOGLE ONE">GOOGLE ONE</option>
+      <option value="INGRESO">INGRESO</option>
+      <option value="INGRESOS">INGRESOS</option>
+      <option value="INVERSIONES">INVERSIONES</option>
+      <option value="MOR A 55">MOR A 55</option>
+      <option value="OBSEQUIOS">OBSEQUIOS</option>
+      <option value="PAGO DEUDA MERCADO PAGO">PAGO DEUDA MERCADO PAGO</option>
+      <option value="PAGO PRESTAMO MOR">PAGO PRESTAMO MOR</option>
+      <option value="PRESTAMO MOR">PRESTAMO MOR</option>
+      <option value="QUINCENA">QUINCENA</option>
+      <option value="RENDIMIENTO">RENDIMIENTO</option>
+      <option value="RETIRO EFECTIVO">RETIRO EFECTIVO</option>
+      <option value="SALDO PLUXEE">SALDO PLUXEE</option>
+      <option value="SALUD">SALUD</option>
+      <option value="SOCIAL">SOCIAL</option>
+      <option value="TDC - ABONO">TDC - ABONO</option>
+      <option value="TDC - AHORRO">TDC - AHORRO</option>
+      <option value="TDC - CARGO">TDC - CARGO</option>
+      <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+      <option value="TRANSPORTE">TRANSPORTE</option>
+    </select>
   </div>
 
   <div class="container">
@@ -274,7 +283,7 @@
 
   <div class="container" id="panelOpcional">
     <label for="CUENTA_DESTINO">CUENTA DE DESTINO</label>
-    <input type="text" id="CUENTA_DESTINO" class="inputGeneral" oninput="this.value = this.value.toUpperCase();"  />
+    <input type="text" id="CUENTA_DESTINO" class="inputGeneral" oninput="this.value = this.value.toUpperCase();" />
   </div>
 
   <div class="container">
@@ -290,18 +299,18 @@
 
 
   <script>
-    document.getElementById('TIPO_DE_OPERACION').addEventListener('change', function() {
-    var selectedValue = this.value;
-    var panel = document.getElementById('panelOpcional');
+    document.getElementById('TIPO_DE_OPERACION').addEventListener('change', function () {
+      var selectedValue = this.value;
+      var panel = document.getElementById('panelOpcional');
 
-    console.log("Valor seleccionado:", selectedValue); // Añade esta línea para verificar el valor
+      console.log("Valor seleccionado:", selectedValue); // Añade esta línea para verificar el valor
 
-    if (selectedValue === 'TRANSFERENCIA') {
-      panel.style.display = 'flex'; // Mostrar el panel
-    } else {
-      panel.style.display = 'none'; // Ocultar el panel
-    }
-  });
+      if (selectedValue === 'TRANSFERENCIA') {
+        panel.style.display = 'flex'; // Mostrar el panel
+      } else {
+        panel.style.display = 'none'; // Ocultar el panel
+      }
+    });
   </script>
 
 
