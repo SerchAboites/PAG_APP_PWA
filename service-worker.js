@@ -4,8 +4,8 @@ const urlsToCache = [
   '/index.html',
   '/style.css',
   '/app.js',
-  '/CONOS_2_icon.png',
-  '/CONOS_VIDEO_2.mp4'
+  '/images/CONOS_2_icon.png',
+  '/videos/CONOS_VIDEO_2.mp4'  // Asegúrate de que esta ruta sea correcta
 ];
 
 // Instalación del Service Worker
