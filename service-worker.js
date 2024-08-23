@@ -1,30 +1,69 @@
-const CACHE_NAME = 'my-pwa-cache-v1';
-const URLs_TO_CACHE = [
+const CACHE_NAME = 'mi-app-cache-v1';
+const urlsToCache = [
   '/',
   '/index.html',
-  '/css/styles.css',
-  '/js/scripts.js',
-  '/images/CONOS_2_icon.png',
-  '/videos/CONOS_VIDEO_2.mp4'
-  // Añade aquí otros recursos que quieras cachear
+  '/style.css',
+  '/app.js',
+  '/CONOS_2_icon.png',
+  '/CONOS_VIDEO_2.mp4'
 ];
 
-self.addEventListener('install', (event) => {
+// Instalación del Service Worker
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(URLs_TO_CACHE).catch((error) => {
-        console.error('Error al agregar recursos a la caché:', error);
-      });
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Archivos cacheados con éxito');
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+// Activación del Service Worker
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Limpiando caché antigua', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
 
-self.addEventListener('fetch', (event) => {
+// Interceptar solicitudes y servir desde la caché
+self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    }).catch((error) => {
-      console.error('Error al recuperar el recurso:', error);
-    })
+    caches.match(event.request)
+      .then(response => {
+        // Devuelve la respuesta de la caché si está disponible
+        if (response) {
+          return response;
+        }
+
+        // Si no está en la caché, realiza la solicitud a la red
+        return fetch(event.request).then(
+          function(response) {
+            // Verifica si la respuesta es válida
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Clona la respuesta
+            var responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(function(cache) {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          }
+        );
+      })
   );
 });
