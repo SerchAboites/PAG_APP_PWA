@@ -1,54 +1,306 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="/manifest.json">
-  <title>Mi PWA</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* Asegúrate de que el video cubra toda la pantalla */
-    .background-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
+
+  <!-- Favicon para navegadores de escritorio -->
+  <!-- Favicon para navegadores de escritorio -->
+  <link rel="icon"
+    href="https://lh3.googleusercontent.com/pw/AP1GczPHlWbQXqL6IxxwF1grxLIDqXpyXSkPeo-Kp-AfMiaQiuKRFZuABd6ssoa_OLQ3RdvQEiGgJkieBGF_uAfF8PxiNL7WaDwQhSH0Yjft3rjh6-iyQrE=s180-p-k"
+    type="image/png">
+
+  <!-- Icono para pantalla de inicio en dispositivos móviles -->
+  <link rel="apple-touch-icon"
+    href="https://lh3.googleusercontent.com/pw/AP1GczPHlWbQXqL6IxxwF1grxLIDqXpyXSkPeo-Kp-AfMiaQiuKRFZuABd6ssoa_OLQ3RdvQEiGgJkieBGF_uAfF8PxiNL7WaDwQhSH0Yjft3rjh6-iyQrE=s180-p-k">
+</head>
+
+
+
+
+<base target="_top">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REPORTE VOLADORES</title>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+<?!= HtmlService.createHtmlOutputFromFile('HOJAESTILOS').getContent(); ?>
+<?!= HtmlService.createHtmlOutputFromFile('HOJAESTILOS_MOBIL').getContent(); ?>
+
+
+
+
+<script>
+  //VARIABLES GLOBALES DEL SCRIPT
+    var numeroFila;
+    var columnaInicial = 2;
+    var cantidadColumnas = 38;
+    var valoresObtenidosFila;
+    
+  function ocultarCarga() {
+      document.getElementById("loading").style.display = "none";
+      document.querySelectorAll(".container, .ocultable,.header").forEach(el => el.style.display = "flex");
+  }
+
+    function mostrarCarga() {
+      document.getElementById("loading").style.display = "flex";
+      document.querySelectorAll(".container, .ocultable,.header").forEach(el => el.style.display = "none");
+  }
+
+    // FUNCION **********************************************************************************************************************************************************
+
+    function obtenerDatos() {
+    // Mostrar carga mientras se obtienen los datos
+    mostrarCarga();
+
+    $.getJSON("https://script.google.com/macros/s/AKfycbxQjLjXHEmV0aId-pncSbvviaBNg7AEuqw4G0Uyt-RSLbKgSvhrSKRA6xamiY8UhbYG/exec", function (data) {
+        console.log("Datos recibidos:", data); // Depurar los datos recibidos
+
+        // Ocultar carga después de recibir los datos
+        ocultarCarga();
+
+        // Configurar autocompletado para los campos CUENTA_DE_OPERACION y CUENTA_DESTINO
+        $('#CUENTA_DE_OPERACION, #CUENTA_DESTINO').autocomplete({
+            source: function (request, response) {
+                var term = request.term.toLowerCase(); // Convertir el término de búsqueda a minúsculas
+                var results = [];
+
+                // Filtrar los resultados basados en el término de búsqueda
+                $.each(data, function (index, item) {
+                    if (typeof item === 'string' && item.toLowerCase().indexOf(term) >= 0) {
+                        results.push(item);
+                    }
+                });
+
+                response(results.slice(0, 10)); // Mostrar hasta 10 resultados
+            },
+            minLength: 1, // Mínimo de caracteres para activar el autocompletado
+            select: function (event, ui) {
+                // Acción al seleccionar un elemento del autocompletado
+                console.log("Seleccionado:", ui.item.value);
+                mostrarCarga();
+
+                // Encontrar el índice del elemento seleccionado en los datos originales
+                var selectedIndex = data.indexOf(ui.item.value) + 3; // Índice basado en 1 para Google Sheets
+
+                // Llamar a una función de Google Apps Script para obtener datos adicionales
+                google.script.run
+                    .withSuccessHandler(function (result) {
+                        console.log("Datos adicionales:", result);
+                        document.getElementById("SALDO_DISPONIBLE").value = result; // Actualizar el valor del campo con el dato obtenido
+                        ocultarCarga();
+                    })
+                    .cantidadActual(selectedIndex); // Llama a la función de Google Apps Script
+            }
+        });
+    }); // Eliminar .obtenerDatosJSON()
+}
+
+
+
+
+
+
+    // FUNCION **********************************************************************************************************************************************************
+
+
+    $(document).ready(function() {
+
+      // Llama a otras funciones o realiza otras acciones
+      mostrarCarga();
+      obtenerDatos();
+    });
+
+
+    // FUNCION **********************************************************************************************************************************************************
+
+    //PROCESAR LOS DATOS EN LOS INPUTS DEL DOM PARA ENVIARLOS A LA BASE DE DATOS
+    function ProcesarInputsEnviar() {
+        mostrarCarga();
+
+        // Variables necesarias para la función
+        var valoresObtenidosFila = new Array(7).fill("");
+        var datosModificados = valoresObtenidosFila.slice(); // Crear una copia del array 'valores'
+
+
+        datosModificados[0] = document.getElementById("CATEGORIA").value.trim();
+        document.getElementById("CATEGORIA").value = "";
+
+        datosModificados[1] = document.getElementById("CONCEPTO").value.trim();
+        document.getElementById("CONCEPTO").value = "";
+
+        // Modificar los valores y limpiar los inputs
+        datosModificados[2] = document.getElementById("CANTIDAD_DE_OPERACION").value.trim();
+        document.getElementById("CANTIDAD_DE_OPERACION").value = "";
+
+        datosModificados[3] = document.getElementById("TIPO_DE_OPERACION").value.trim();
+        document.getElementById("TIPO_DE_OPERACION").value = "";
+
+        datosModificados[4] = document.getElementById("CUENTA_DE_OPERACION").value.trim();
+        document.getElementById("CUENTA_DE_OPERACION").value = "";
+
+        datosModificados[5] = document.getElementById("CUENTA_DESTINO").value.trim();
+        document.getElementById("CUENTA_DESTINO").value = "";
+
+
+        document.getElementById("SALDO_DISPONIBLE").value = "";
+        
+
+
+        // Agregar la fecha actual
+        datosModificados.unshift(new Date().toLocaleString());
+
+        console.log("LOS DATOS QUE SE VAN A SUBIR A SHEETS SON = ", datosModificados);
+
+        // Llamar a Google Apps Script para registrar los datos en Sheets
+        google.script.run
+            .withSuccessHandler(ocultarCarga) // Manejador de éxito
+            .registrarDatos(datosModificados);
     }
 
-    /* Asegúrate de que el contenido se vea sobre el video */
-    .content {
-      position: relative;
-      z-index: 1;
-      color: white; /* Cambia el color según tu diseño */
-    }
-  </style>
+
+
+    // FUNCION **********************************************************************************************************************************************************
+
+</script>
+
 </head>
+
+
+
+
+
+
+
+
 <body>
-  <video class="background-video" autoplay muted loop>
-    <source src="videos/CONOS_VIDEO_2.mp4" type="video/mp4">
-    Tu navegador no soporta el formato de video.
-  </video>
-  <div class="content">
-    <h1>Bienvenido a mi PWA</h1>
-    <p>Este es el contenido sobre el video de fondo.</p>
+
+
+
+  <div class="container">
+    <h1>REGISTRO DE GASTOS</h1>
   </div>
-  <script src="app.js"></script>
+
+  <div id="loading">
+    <img src="https://lh3.googleusercontent.com/pw/AP1GczMJNN-OvLLx7Cb6ZdWSDlYinaG4HWTaUH5qH8GBE3GwISE4VizJmBvfVLWeiYq92FWilb0qMwOc5Ta8Pn1mUMiodL-yWhZZf19ChS8PKuxe4a5B058=w2400" alt="Loading Image" width="300px" class="CARGANDO_GIF">
+    <span class="CARGANDO_text">Cargando...</span>
+  </div>
+
+  <div class="container">
+    <label for="CUENTA_DE_OPERACION">CUENTA DE OPERACIÓN</label>
+    <input type="text" id="CUENTA_DE_OPERACION" oninput="this.value = this.value.toUpperCase();" />
+  </div>
+
+  <div class="container">
+    <label for="SALDO_DISPONIBLE">SALDO DISPONIBLE</label>
+    <input type="text" id="SALDO_DISPONIBLE" disabled placeholder="000" />
+  </div>
+
+  <div class="container">
+    <label for="CATEGORIA">CATEGORIA</label>
+    <select id="CATEGORIA">
+        <option value=""> SELLECIONA UNA OPCIÓN</option> 
+        <option value="AHORRO BABILONICO">AHORRO BABILONICO</option>
+        <option value="BEBIDAS">BEBIDAS</option>
+        <option value="CALIBRAR">CALIBRAR</option>
+        <option value="CARRO">CARRO</option>
+        <option value="CELULAR">CELULAR</option>
+        <option value="COCO">COCO</option>
+        <option value="COMIDA">COMIDA</option>
+        <option value="COSAS QUE QUIERO">COSAS QUE QUIERO</option>
+        <option value="CUIDADO PERSONAL">CUIDADO PERSONAL</option>
+        <option value="DISTRIBUCIÓN DE GASTOS">DISTRIBUCIÓN DE GASTOS</option>
+        <option value="DONACIÓN">DONACIÓN</option>
+        <option value="EFECTIVO">EFECTIVO</option>
+        <option value="EMERGENCIAS">EMERGENCIAS</option>
+        <option value="ESTACIONAMIENTO">ESTACIONAMIENTO</option>
+        <option value="GASOLINA">GASOLINA</option>
+        <option value="GOOGLE ONE">GOOGLE ONE</option>
+        <option value="INGRESO">INGRESO</option>
+        <option value="INGRESOS">INGRESOS</option>
+        <option value="INVERSIONES">INVERSIONES</option>
+        <option value="MOR A 55">MOR A 55</option>
+        <option value="OBSEQUIOS">OBSEQUIOS</option>
+        <option value="PAGO DEUDA MERCADO PAGO">PAGO DEUDA MERCADO PAGO</option>
+        <option value="PAGO PRESTAMO MOR">PAGO PRESTAMO MOR</option>
+        <option value="PRESTAMO MOR">PRESTAMO MOR</option>
+        <option value="QUINCENA">QUINCENA</option>
+        <option value="RENDIMIENTO">RENDIMIENTO</option>
+        <option value="RETIRO EFECTIVO">RETIRO EFECTIVO</option>
+        <option value="SALDO PLUXEE">SALDO PLUXEE</option>
+        <option value="SALUD">SALUD</option>
+        <option value="SOCIAL">SOCIAL</option>
+        <option value="TDC - ABONO">TDC - ABONO</option>
+        <option value="TDC - AHORRO">TDC - AHORRO</option>
+        <option value="TDC - CARGO">TDC - CARGO</option>
+        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+        <option value="TRANSPORTE">TRANSPORTE</option>
+      </select>
+  </div>
+
+  <div class="container">
+    <label for="CONCEPTO">CONCEPTO</label>
+    <input type="text" id="CONCEPTO" oninput="this.value = this.value.toUpperCase();" />
+  </div>
+
+  <div class="container">
+    <label for="TIPO_DE_OPERACION">TIPO DE OPERACIÓN</label>
+    <select id="TIPO_DE_OPERACION">
+      <option value="">SELECCIONA UNA OPCIÓN</option>
+      <option value="INGRESO">INGRESO</option>
+      <option value="EGRESO">EGRESO</option>
+      <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+    </select>
+  </div>
+
+  <div class="container">
+    <label for="CANTIDAD_DE_OPERACION">CANTIDAD DE OPERACIÓN</label>
+    <input type="number" id="CANTIDAD_DE_OPERACION" class="inputGeneral" />
+  </div>
+
+  <div class="container" id="panelOpcional">
+    <label for="CUENTA_DESTINO">CUENTA DE DESTINO</label>
+    <input type="text" id="CUENTA_DESTINO" class="inputGeneral" oninput="this.value = this.value.toUpperCase();"  />
+  </div>
+
+  <div class="container">
+    <input type="button" value="ENVIAR" onclick="ProcesarInputsEnviar();" />
+  </div>
+
+
+  <!--
+  <iframe id="video-background"
+    src="https://www.youtube.com/embed/jPTfZWP96yY?autoplay=1&mute=1&loop=1&playlist=jPTfZWP96yY&controls=0"
+    frameborder="0" allowfullscreen></iframe>
+  -->
+
 
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then((registration) => {
-            console.log('ServiceWorker registrado con éxito:', registration);
-          })
-          .catch((error) => {
-            console.error('Error al registrar el ServiceWorker:', error);
-          });
-      });
+    document.getElementById('TIPO_DE_OPERACION').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var panel = document.getElementById('panelOpcional');
+
+    console.log("Valor seleccionado:", selectedValue); // Añade esta línea para verificar el valor
+
+    if (selectedValue === 'TRANSFERENCIA') {
+      panel.style.display = 'flex'; // Mostrar el panel
+    } else {
+      panel.style.display = 'none'; // Ocultar el panel
     }
+  });
   </script>
+
+
+
+
+
 </body>
+
+
+
+
 </html>
