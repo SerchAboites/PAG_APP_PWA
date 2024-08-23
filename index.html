@@ -64,39 +64,48 @@
         ocultarCarga();
 
         // Configurar autocompletado para los campos CUENTA_DE_OPERACION y CUENTA_DESTINO
-        $('#CUENTA_DE_OPERACION, #CUENTA_DESTINO').autocomplete({
-            source: function (request, response) {
-                var term = request.term.toLowerCase(); // Convertir el término de búsqueda a minúsculas
-                var results = [];
+        $(document).ready(function() {
+    var selectedIndex; // Definir la variable aquí
 
-                // Filtrar los resultados basados en el término de búsqueda
-                $.each(data, function (index, item) {
-                    if (typeof item === 'string' && item.toLowerCase().indexOf(term) >= 0) {
-                        results.push(item);
-                    }
-                });
+          $('#CUENTA_DE_OPERACION, #CUENTA_DESTINO').autocomplete({
+              source: function (request, response) {
+                  var term = request.term.toLowerCase(); // Convertir el término de búsqueda a minúsculas
+                  var results = [];
 
-                response(results.slice(0, 10)); // Mostrar hasta 10 resultados
-            },
-            minLength: 1, // Mínimo de caracteres para activar el autocompletado
-            select: function (event, ui) {
-                // Acción al seleccionar un elemento del autocompletado
-                console.log("Seleccionado:", ui.item.value);
-                mostrarCarga();
+                  // Filtrar los resultados basados en el término de búsqueda
+                  $.each(data, function (index, item) {
+                      if (typeof item === 'string' && item.toLowerCase().indexOf(term) >= 0) {
+                          results.push(item);
+                      }
+                  });
 
-                // Encontrar el índice del elemento seleccionado en los datos originales
-                var selectedIndex = data.indexOf(ui.item.value) + 3; // Índice basado en 1 para Google Sheets
+                  response(results.slice(0, 10)); // Mostrar hasta 10 resultados
+              },
+              minLength: 1, // Mínimo de caracteres para activar el autocompletado
+              select: function (event, ui) {
+                  // Acción al seleccionar un elemento del autocompletado
+                  console.log("Seleccionado:", ui.item.value);
+                  selectedIndex = data.indexOf(ui.item.value) + 3; // Índice basado en 1 para Google Sheets (ajustar si es necesario)
+                  mostrarCarga();
 
-                // Llamar a una función de Google Apps Script para obtener datos adicionales
-                google.script.run
-                    .withSuccessHandler(function (result) {
-                        console.log("Datos adicionales:", result);
-                        document.getElementById("SALDO_DISPONIBLE").value = result; // Actualizar el valor del campo con el dato obtenido
-                        ocultarCarga();
-                    })
-                    .cantidadActual(selectedIndex); // Llama a la función de Google Apps Script
-            }
-        });
+                  // Llamar a la función de Google Apps Script para obtener datos adicionales
+                  $.getJSON("https://script.google.com/macros/s/AKfycbyK-N783kcqJtjRaU_6CbFpJh96AhqIzYrhOZ-dziB8lZSX4tVr780rjY1gBx6HVH0Z/exec", { indice: selectedIndex }, function (data) {
+                      console.log("Datos recibidos:", data); // Depurar los datos recibidos
+
+                      // Ocultar carga después de recibir los datos
+                      ocultarCarga();
+
+                      // Actualizar el valor del campo con el dato obtenido
+                      document.getElementById("SALDO_DISPONIBLE").value = data;
+                  }).fail(function(jqXHR, textStatus, errorThrown) {
+                      console.error("Error al obtener datos:", textStatus, errorThrown);
+                      ocultarCarga();
+                  });
+              }
+          });
+      });
+
+
     }); // Eliminar .obtenerDatosJSON()
 }
 
