@@ -1,15 +1,19 @@
 {
     "name": "Mi PWA",
     "short_name": "PWA",
-    "description": "Una aplicación web progresiva simple.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#000000",
+    "description": "Una Progressive Web App",
     "icons": [
       {
-        "src": "/icon.png",
+        "src": "/images/CONOS_2_icon.png",
         "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/CONOS_2_icon.png",
+        "sizes": "512x512",
         "type": "image/png"
       }
     ]
