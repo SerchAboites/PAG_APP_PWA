@@ -164,17 +164,20 @@
     var datos = encodeURIComponent(JSON.stringify(datosModificados));
     var url = "https://script.google.com/macros/s/AKfycbxo-3aRvlzmjABKUScaz146gTZhaiWYRyvsgaQ7G9FI9fZnTnR8bGMAXzDPGFVNjG6z/exec?datos=" + datos;
 
-    // Realizar la solicitud GET
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // Manejar la respuesta del servidor
-            ocultarCarga();    // Ocultar carga después de recibir respuesta
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            ocultarCarga();    // Ocultar carga en caso de error
-        });
+// Realizar la solicitud GET con 'no-cors'
+fetch(url, { mode: 'no-cors' })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+        // Como estamos en 'no-cors', no podemos leer la respuesta
+        console.log('Solicitud enviada con éxito');
+        ocultarCarga();    // Ocultar carga después de una respuesta exitosa
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        ocultarCarga();    // Ocultar carga en caso de error
+    });
 }
 
 
