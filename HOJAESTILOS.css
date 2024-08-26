@@ -1,23 +1,22 @@
 body {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 20px;
-    color: white;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: auto;
-    flex-direction: column;
-    position: relative;
-    z-index: 1;
-    background-image: url("https://lh3.googleusercontent.com/pw/AP1GczOq2VZU6IYhAMpQXU_StzBJOSIw7Y95PiSJwvt5Zw5AMA8PgdD9Wo3iR-1LKoxG0beZiPf1-ObE8eRKxGP703BQMUn-8gdn-DHvNBd0FGoRqV2iPDE=w2400");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 20px;
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: auto;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  background-image: url("https://lh3.googleusercontent.com/pw/AP1GczOq2VZU6IYhAMpQXU_StzBJOSIw7Y95PiSJwvt5Zw5AMA8PgdD9Wo3iR-1LKoxG0beZiPf1-ObE8eRKxGP703BQMUn-8gdn-DHvNBd0FGoRqV2iPDE=w2400");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
   
   #video-background {
     position: fixed;
