@@ -1,6 +1,5 @@
 
-
-@media only screen and (max-width: 1080px) {
+  @media (max-width: 1080px) {
     body {
       padding: 10px;
     }
@@ -73,7 +72,7 @@
       /* Ajusta este valor si el encabezado es más alto en dispositivos móviles */
     }
 
-   
+
 
     .container {
       width: 95%;
@@ -145,6 +144,11 @@
       /* Segundo elemento ocupa el doble del espacio del primer elemento */
     }
 
+    #panelOpcional {
+      width: 95%;
+      font-size: 35px;
+    }
+
     .panel2Columnas {
       display: flex;
       flex-direction: row;
@@ -186,11 +190,6 @@
       /* Borde de ejemplo */
       text-align: center;
       /* Centra el texto en los elementos */
-    }
-
-    #panelOpcional{
-      width: 95%;
-      font-size: 35px;
     }
 
     #botonFirmarPanel {
@@ -292,8 +291,6 @@
     }
 
 
-
-    /***********************************************************************************************************************************************************************************************/
 
     .button-link {
       display: flex;
@@ -424,8 +421,6 @@
 
 
 
-
-
     #loading {
       display: flex;
       flex-direction: column;
@@ -468,7 +463,7 @@
     }
 
 
-    
+   
     /* Estilo general para el datepicker */
     .ui-datepicker {
       font-size: 2.3em;
@@ -712,6 +707,8 @@
       /* Quita la línea de separación del último elemento */
     }
 
+  
+    /* FIRMA DIGITAL MOBIL*/
 
 
     #signatureCanvas1,
@@ -769,11 +766,6 @@
       background-color: darkgreen;
       transform: scale(1.05);
     }
-
-
-
-
-
 
   }
 
