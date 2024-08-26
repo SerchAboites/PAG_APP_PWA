@@ -1,5 +1,5 @@
 /* ESTILOS PARA DISPOSITIVOS MÓVILES */
-@media (max-width: 1080px) and (orientation: portrait) {
+@media (orientation: portrait) {
     body {
       padding: 10px;
     }
