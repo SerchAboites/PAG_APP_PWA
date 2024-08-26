@@ -1,3 +1,779 @@
-@media (max-width: 1080px) {
 
-}
+
+  @media (max-width: 1080px) {
+    body {
+      padding: 10px;
+    }
+
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      /* Organiza los elementos en una columna vertical */
+      justify-content: center;
+      /* Centra los elementos verticalmente */
+      align-items: center;
+      /* Opcional: centra los elementos horizontalmente */
+      background-color: #1F4E79;
+      /* Fondo sólido */
+      color: white;
+      text-align: center;
+      /* Centra el texto dentro de cada elemento */
+      padding: 15px 0;
+      position: fixed;
+      top: 0;
+      width: 95%;
+      height: auto;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      /* Sombra opcional */
+      border-radius: 20px;
+      margin-top: 20px;
+      /* Espacio superior para el contenedor */
+    }
+
+    .header input {
+      height: 80px;
+      border-radius: 30px;
+    }
+
+    input:disabled {
+      background-color: rgba(0, 0, 0, 0.1) !important;
+      color: #FFC000 !important;
+      border: 1px solid #ccc !important;
+      cursor: not-allowed !important;
+      padding: 8px !important;
+      border-radius: 25px !important;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+      font-size: 50px  !important;
+
+    }
+
+
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 45px;
+      /* Tamaño de fuente más grande */
+      line-height: 1.8;
+      /* Ajusta la altura de línea si es necesario */
+    }
+
+    h2 {
+      margin: 0;
+      padding: 0;
+      font-size: 35px;
+      /* Tamaño de fuente más pequeño */
+      line-height: 1.6;
+      /* Ajusta la altura de línea si es necesario */
+    }
+
+    .content {
+      margin-top: 120px;
+      /* Ajusta este valor si el encabezado es más alto en dispositivos móviles */
+    }
+
+   
+
+    .container {
+      width: 95%;
+      height: auto;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 25px;
+      font-size: 35px;
+      text-align: center;
+    }
+
+    .container input {
+      /* Tus estilos aquí */
+      width: 95%;
+      height: 90px;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 25px;
+      font-size: 35px;
+      text-align: center;
+    }
+
+    .containerDobleInput {
+
+      width: 95%;
+      height: 400px;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 25px;
+      font-size: 35px;
+      text-align: center;
+    }
+
+    .contenedor1ColumnaAlturaAdaptable {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      background-color: rgba(0, 0, 0, 0.6);
+      width: 95%;
+      height: auto;
+      padding: 30px;
+      box-sizing: border-box;
+      border-radius: 20px;
+      margin: 10px;
+      font-size: 35px;
+
+    }
+
+    .dobleColumnaSinFondo {
+      display: flex;
+      flex-direction: row;
+      /* Organiza los elementos en una fila horizontal */
+      align-items: center;
+      /* Centra los elementos verticalmente */
+      justify-content: center;
+      /* Centra los elementos horizontalmente */
+      width: 90%;
+      /* Ancho total del contenedor (ajustar según necesidad) */
+      font-size: 35px;
+    }
+
+    .dobleColumnaSinFondo> :first-child {
+      flex: 1;
+      /* Primer elemento ocupa el espacio restante en proporción 1 */
+    }
+
+    .dobleColumnaSinFondo> :nth-child(2) {
+      flex: 2;
+      /* Segundo elemento ocupa el doble del espacio del primer elemento */
+    }
+
+    .panel2Columnas {
+      display: flex;
+      flex-direction: row;
+      /* Organiza los elementos en una fila horizontal */
+      align-items: center;
+      /* Centra los elementos verticalmente */
+      justify-content: center;
+      /* Centra los elementos horizontalmente */
+      width: 95%;
+      /* Ancho total del contenedor (ajustar según necesidad) */
+    }
+
+    .panel2Columnas>* {
+      flex: 1 1 50%;
+      /* Cada elemento hijo ocupará el 50% del ancho del contenedor */
+    }
+
+    .panel5Columnas {
+      width: 95%;
+      height: auto;
+      /* Ancho del contenedor */
+      display: flex;
+      flex-wrap: wrap;
+      /* Permite que los elementos se envuelvan en la siguiente línea si es necesario */
+      gap: 2px;
+      /* Espacio entre columnas (opcional) */
+      box-sizing: border-box;
+    }
+
+    .panel5Columnas>* {
+      flex: 1 1 5%;
+      /* Cada elemento ocupa el 18% del ancho del contenedor, ajusta este valor según sea necesario */
+      box-sizing: border-box;
+      /* Incluye el padding y el borde en el ancho total del elemento */
+      background-color: #f0f0f0;
+      /* Fondo de ejemplo para los elementos */
+      padding: 5px;
+      border: 1px solid #ddd;
+      /* Borde de ejemplo */
+      text-align: center;
+      /* Centra el texto en los elementos */
+    }
+
+    #panelOpcional{
+      width: 95%;
+      font-size: 35px;
+    }
+
+    #botonFirmarPanel {
+      display: flex;
+      flex-direction: column;
+      /* Alinea los elementos en una fila */
+      flex-wrap: wrap;
+      /* Permite que los elementos se envuelvan a la siguiente línea */
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 25px;
+      width: 95%;
+      height: 250px;
+      box-sizing: border-box;
+      margin: 20px;
+    }
+
+    #botonFirmarPanel>* {
+      flex: 1 1 50%;
+      /* Establece el ancho de los elementos internos para que ocupen el 45% del contenedor */
+      margin: 5px;
+      /* Espacio entre elementos */
+      box-sizing: border-box;
+      /* Asegura que el padding y el border se incluyan en el ancho y alto del elemento */
+    }
+
+    #multiple {
+      display: flex;
+      flex-direction: row;
+      /* Alinea los elementos en una fila */
+      flex-wrap: wrap;
+      /* Permite que los elementos se envuelvan a la siguiente línea */
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 25px;
+      width: 100%;
+      height: 250px;
+      box-sizing: border-box;
+      margin: 20px;
+    }
+
+    #multiple>* {
+      flex: 1 1 40%;
+      /* Establece el ancho de los elementos internos para que ocupen el 45% del contenedor */
+      margin: 5px;
+      /* Espacio entre elementos */
+      box-sizing: border-box;
+      /* Asegura que el padding y el border se incluyan en el ancho y alto del elemento */
+    }
+
+    #multiple3 {
+      display: none;
+      flex-direction: row;
+      /* Alinea los elementos en una fila */
+      flex-wrap: wrap;
+      /* Permite que los elementos se envuelvan a la siguiente línea */
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 20px;
+      width: 95%;
+      height: 400px;
+      box-sizing: border-box;
+      margin: 10px;
+
+    }
+
+    #multiple3>* {
+      flex: 1 1 35%;
+      /* Establece el ancho de los elementos internos para que ocupen el 45% del contenedor */
+      margin: 5px;
+      /* Espacio entre elementos */
+      box-sizing: border-box;
+      /* Asegura que el padding y el border se incluyan en el ancho y alto del elemento */
+    }
+
+
+    #cajaDeComentarios {
+      display: none;
+      flex-direction: row;
+      /* Alinea los elementos en una fila */
+      flex-wrap: wrap;
+      /* Permite que los elementos se envuelvan a la siguiente línea */
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 20px;
+      width: 95%;
+      height: auto;
+      box-sizing: border-box;
+      margin: 10px;
+
+    }
+
+
+
+    /***********************************************************************************************************************************************************************************************/
+
+    .button-link {
+      display: flex;
+      width: 90%;
+      height: 60%;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      /* Quita el subrayado de los enlaces */
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 40px;
+      /* Cambia el tamaño de la letra a 20px */
+      align-items: center;
+      /* Centra verticalmente */
+      justify-content: center;
+      /* Centra horizontalmente */
+    }
+
+
+    input[type="button"] {
+      color: black;
+      height: 150px;
+      background-color: #00FFFF;
+      border: none;
+      width: 100%;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 30px;
+      text-align: center;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+
+    input[type="button"]:hover {
+      background-color: #0099CC;
+    }
+
+    /* Estilo para cambiar la apariencia al pasar el ratón */
+    .button-link:hover {
+      background-color: #0056b3;
+    }
+
+
+
+
+    .button-link-1-1 {
+      display: flex;
+      justify-content: center;
+      /* Centra horizontalmente */
+      align-items: center;
+      /* Centra verticalmente */
+      width: 60px;
+      height: 40%;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 30px;
+      text-align: center;
+      /* Alinea el texto al centro */
+    }
+
+    /* Estilo para cambiar la apariencia al pasar el ratón */
+    .button-link-1-1:hover {
+      background-color: #0056b3;
+    }
+
+
+
+    .inputGeneral,
+    select,
+    input,
+    input[type="number"] {
+      width: 90%;
+      height: 90px;
+      /* Altura deseada */
+      padding: 5px;
+      font-size: 40px;
+      border-radius: 20px;
+      color: #000000;
+      margin: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .panel5Columnas input {
+      height: 90px;
+      /* Asegura la altura específica para inputs de tipo number */
+      font-size: 40px;
+      /* Tamaño de fuente */
+      border-radius: 30px;
+    }
+
+
+    textarea {
+      width: 95%;
+      height: 250px;
+      padding: 20px;
+      font-size: 40px;
+      border-radius: 20px;
+      color: #000000;
+      margin: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+      /* Asegúrate de que ambos elementos tengan el mismo borde */
+      box-sizing: border-box;
+      /* Incluye el borde y el relleno en el tamaño total */
+      text-transform: uppercase;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+
+    .container select,
+    #SELECTOR_DE_MES {
+      appearance: none;
+      /* Elimina el estilo predeterminado del navegador */
+      -webkit-appearance: none;
+      /* Elimina el estilo predeterminado en WebKit */
+      -moz-appearance: none;
+      /* Elimina el estilo predeterminado en Firefox */
+    }
+
+
+
+
+
+    #loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      width: 85%;
+      height: 1000px;
+      box-sizing: border-box;
+      margin: 10px;
+      text-align: center;
+      color: white;
+    }
+
+    .CARGANDO_GIF {
+      height: 700px;
+      /* Ajusta la altura según tus necesidades */
+      width: auto;
+
+    }
+
+    .CARGANDO_text {
+
+      font-size: 60px;
+    }
+
+
+
+    .fase-label {
+      font-size: 40px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    label {
+      margin: 30px;
+    }
+
+
+    
+    /* Estilo general para el datepicker */
+    .ui-datepicker {
+      font-size: 2.3em;
+      /* Tamaño de fuente */
+      background: white;
+      /* Color de fondo */
+      border-radius: 20px;
+      /* Redondeo de las esquinas */
+    }
+
+    /* Fondo detrás de los números de los días seleccionables */
+    .ui-datepicker-calendar {
+      border-radius: 20px;
+      /* Redondeo de las esquinas */
+      background: gray;
+      /* Color de fondo */
+
+    }
+
+    /* Nombre del día de la semana */
+    .ui-datepicker-calendar th {
+      background: white;
+      /* Color de fondo */
+      color: black;
+      /* Color del texto */
+      border-radius: 1px;
+      /* Redondeo de las esquinas */
+      padding: 1-M_LU4MEb9wUEiINj8tTzg-tgPryE0JVpx;
+      /* Espaciado interno */
+    }
+
+    /* FONDO DE LOS DIAS SELECCIONABLES UNIDAD*/
+    .ui-datepicker-calendar td {
+      background-color: white;
+      /* Color de fondo para las celdas */
+      border: none;
+      /* Borde de las celdas */
+      padding: 5px;
+      /* Espaciado interno */
+      text-align: center;
+      /* Alineación del texto */
+      border-radius: 1px;
+      /* Redondeo de las esquinas */
+      background: gray;
+      /* Color de fondo */
+      font-size: 1.5em;
+      /* Tamaño de fuente para los números de los días */
+    }
+
+    /* Estilo para los días del mes actual (no seleccionados) */
+    .ui-datepicker-calendar .ui-state-default {
+      color: #333;
+      /* Color del texto */
+      background: white;
+      /* Color de fondo */
+      border: none;
+      /* Borde de las celdas */
+      border-radius: 100%;
+      /* Redondeo de las esquinas */
+      text-align: center;
+    }
+
+    /* Estilo para las celdas de los días seleccionados */
+    .ui-datepicker-calendar .ui-state-active {
+      background: #FFC000;
+      /* Color de fondo para el día seleccionado */
+      color: #fff;
+      /* Color del texto */
+      border: none;
+      /* Borde del día seleccionado */
+      border-radius: 10px;
+      /* Redondeo de las esquinas */
+    }
+
+    /* Estilo para las celdas de los días inactivos */
+    .ui-datepicker-calendar .ui-state-disabled {
+      color: #aaa;
+      /* Color del texto para los días inactivos */
+      background: red;
+      /* Color de fondo para los días inactivos */
+      border: 1px solid #ddd;
+      /* Borde de las celdas inactivas */
+      border-radius: 10px;
+      /* Redondeo de las esquinas */
+      font-style: italic;
+      /* Estilo de texto (opcional) */
+    }
+
+
+    /* Estilo para el dia actual*/
+    .ui-datepicker-calendar .ui-state-hover {
+      background: #04CDFC;
+      /* Color de fondo al pasar el ratón */
+      color: #000;
+      /* Color del texto */
+      border-radius: 10px;
+      /* Redondeo de las esquinas */
+    }
+
+    /* Encabezado del datepicker */
+    .ui-datepicker-header {
+      background: gray;
+      /* Color de fondo */
+      color: white;
+      /* Color del texto */
+      border-radius: 10px;
+      /* Redondeo de las esquinas */
+    }
+
+
+    /* Estilo para los botones de navegación (Prev/Next) */
+    .ui-datepicker-prev,
+    .ui-datepicker-next {
+      background: gray;
+      /* Color de fondo */
+      color: white;
+      /* Color del texto */
+      border: none;
+      /* Sin borde */
+      border-radius: 50%;
+      /* Redondeo de las esquinas para hacer un círculo */
+      width: 30px;
+      /* Ancho del contenedor */
+      height: 30px;
+      /* Alto del contenedor */
+      line-height: 30px;
+      /* Alineación vertical del texto */
+      text-align: center;
+      /* Alineación horizontal del texto */
+      font-size: 1.2em;
+      /* Tamaño de fuente para los íconos */
+      background-image: none;
+      /* Eliminar cualquier imagen de fondo */
+      display: inline-flex;
+      /* Utilizar flexbox para centrar el contenido */
+      align-items: center;
+      /* Alineación vertical en el centro */
+      justify-content: center;
+      /* Alineación horizontal en el centro */
+    }
+
+    /* Estilo para los íconos de las flechas */
+    .ui-datepicker-prev::before,
+    .ui-datepicker-next::before {
+      font-family: "FontAwesome";
+      /* Asegúrate de que esté usando la fuente correcta si usas iconos de fuente */
+      content: "";
+      content: "\f053";
+      /* Código del ícono para la flecha izquierda (FontAwesome) */
+      color: white;
+      /* Color del ícono */
+      background-image: none;
+    }
+
+    .ui-datepicker-next::before {
+      content: "";
+      content: "\f054";
+      /* Código del ícono para la flecha derecha (FontAwesome) */
+      color: white;
+      /* Color del ícono */
+      background-image: none;
+    }
+
+    /* Estilo para los botones de aceptar/cancelar */
+    .ui-datepicker-buttonpane button {
+      background: #007bff;
+      /* Color de fondo */
+      color: #fff;
+      /* Color del texto */
+      border: none;
+      /* Sin borde */
+      border-radius: 5px;
+      /* Redondeo de las esquinas */
+      padding: 10px;
+      /* Espaciado interno */
+      font-size: 1em;
+      /* Tamaño de fuente */
+    }
+
+    /* Estilo para los botones deshabilitados */
+    .ui-datepicker-buttonpane button.ui-state-disabled {
+      background: red;
+      /* Color de fondo para botones deshabilitados */
+      color: #666;
+      /* Color del texto para botones deshabilitados */
+    }
+
+    /* Estilo para los controles de selección de mes/año */
+    .ui-datepicker-month,
+    .ui-datepicker-year {
+      background: #fff;
+      /* Color de fondo */
+      border: none;
+      /* Borde */
+      border-radius: 20px;
+      /* Redondeo de las esquinas */
+      padding: 5px;
+      /* Espaciado interno */
+
+    }
+
+    .ui-datepicker-month .ui-state-active,
+    .ui-datepicker-year .ui-state-active {
+      background: blue;
+      /* Color de fondo para la opción seleccionada */
+      color: #fff;
+      /* Color del texto */
+      margin: 20px;
+    }
+
+
+    /* Estilo general para el datepicker */
+   
+    /* ESTILO DE LA LISTA AUTOCOMPLETADO*/
+
+    .ui-autocomplete {
+      max-height: 350px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      margin: 10px;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: #00FFFF;
+      border: 1px solid white;
+    }
+
+    .ui-menu-item {
+      font-size: 40px;
+      height: 100px;
+      /* Altura de cada elemento de la lista */
+      border-bottom: 1px solid grey;
+      display: flex;
+      /* Habilita Flexbox */
+      align-items: center;
+      /* Centra verticalmente */
+      padding-left: 10px;
+      /* Opcional: agrega un poco de espacio a la izquierda */
+    }
+
+    .ui-menu-item:last-child {
+      border-bottom: none;
+      /* Quita la línea de separación del último elemento */
+    }
+
+
+
+    #signatureCanvas1,
+    #signatureCanvas2 {
+      border: 1px solid #000;
+      cursor: crosshair;
+      background-color: white;
+      /* Fondo blanco para mejor visibilidad */
+      display: block;
+      /* Asegura que el canvas se muestre como un bloque */
+      width: 800px;
+      /* Ajusta el tamaño del canvas al contenedor */
+      max-width: 950px;
+      /* Limita el tamaño máximo del canvas */
+      height: 1100px;
+      /* Ajusta la altura automáticamente */
+    }
+
+    #signatureForm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 25px;
+      width: 95%;
+      box-sizing: border-box;
+      margin: 10px;
+      height: 1400px;
+      font-size: 40px;
+    }
+
+    .boton-tipo1 {
+      display: flex;
+      justify-content: center;
+      /* Centra horizontalmente */
+      align-items: center;
+      /* Centra verticalmente */
+      width: 90%;
+      height: 40%;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 30px;
+      text-align: center;
+      /* Alinea el texto al centro */
+    }
+
+    .boton-tipo1:hover {
+      background-color: darkgreen;
+      transform: scale(1.05);
+    }
+
+
+
+
+
+
+  }
+
