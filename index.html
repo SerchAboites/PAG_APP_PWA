@@ -133,7 +133,6 @@
     var valoresObtenidosFila = new Array(7).fill("");
     var datosModificados = valoresObtenidosFila.slice(); // Crear una copia del array 'valores'
 
-
     datosModificados[0] = document.getElementById("CATEGORIA").value.trim();
     document.getElementById("CATEGORIA").value = "";
 
@@ -153,31 +152,31 @@
     datosModificados[5] = document.getElementById("CUENTA_DESTINO").value.trim();
     document.getElementById("CUENTA_DESTINO").value = "";
 
-
     document.getElementById("SALDO_DISPONIBLE").value = "";
-
-
 
     // Agregar la fecha actual
     datosModificados.unshift(new Date().toLocaleString());
 
     console.log("LOS DATOS QUE SE VAN A SUBIR A SHEETS SON = ", datosModificados);
 
-    $.ajax({
-        url: 'https://script.google.com/macros/s/AKfycbxo-3aRvlzmjABKUScaz146gTZhaiWYRyvsgaQ7G9FI9fZnTnR8bGMAXzDPGFVNjG6z/exec',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(datosModificados),
-        success: function(response) {
-            console.log("Datos registrados:", response);
-            ocultarCarga();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error("Error al registrar datos:", textStatus, errorThrown);
-            ocultarCarga();
-        }
-    }); 
-  }
+    // Construir la URL con los datos codificados
+
+    var datos = encodeURIComponent(JSON.stringify(datosModificados));
+    var url = "https://script.google.com/macros/s/AKfycbxo-3aRvlzmjABKUScaz146gTZhaiWYRyvsgaQ7G9FI9fZnTnR8bGMAXzDPGFVNjG6z/exec?datos=" + datos;
+
+    // Realizar la solicitud GET
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Manejar la respuesta del servidor
+            ocultarCarga();    // Ocultar carga después de recibir respuesta
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            ocultarCarga();    // Ocultar carga en caso de error
+        });
+}
+
 
 
 
