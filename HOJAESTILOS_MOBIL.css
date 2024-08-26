@@ -1,5 +1,5 @@
 /* ESTILOS PARA DISPOSITIVOS MÓVILES */
-@media (max-width: 1080px) {
+@media (max-width: 1080px) and (orientation: portrait) {
     body {
       padding: 10px;
     }
@@ -313,8 +313,8 @@
     input[type="number"] {
       width: 90%;
       height: 50px;
-      padding: 5px;
-      font-size: 40px;
+      padding: 1px;
+      font-size: 20px;
       border-radius: 20px;
       color: #333;
     }
