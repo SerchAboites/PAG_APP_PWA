@@ -93,6 +93,18 @@
               // Ocultar carga después de recibir los datos
               ocultarCarga();
 
+              document.getElementById("CATEGORIA").value = "";
+
+              document.getElementById("CONCEPTO").value = "";
+
+              document.getElementById("CANTIDAD_DE_OPERACION").value = "";
+
+              document.getElementById("TIPO_DE_OPERACION").value = "";
+
+              document.getElementById("CUENTA_DESTINO").value = "";
+
+              document.getElementById("NUEVO_TOTAL").value = "";
+
               // Actualizar el valor del campo con el dato obtenido
               document.getElementById("SALDO_DISPONIBLE").value = data;
             }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -153,6 +165,8 @@
     document.getElementById("CUENTA_DESTINO").value = "";
 
     document.getElementById("SALDO_DISPONIBLE").value = "";
+
+    document.getElementById("NUEVO_TOTAL").value = "";
 
     // Agregar la fecha actual
     datosModificados.unshift(new Date().toLocaleString());
@@ -228,7 +242,7 @@
 
   <div class="container">
     <label for="SALDO_DISPONIBLE">SALDO DISPONIBLE</label>
-    <input type="text" id="SALDO_DISPONIBLE" disabled placeholder="000" />
+    <input type="text" id="SALDO_DISPONIBLE" disabled placeholder="0,00" />
   </div>
 
   <div class="container">
@@ -238,7 +252,7 @@
 
   <div class="container">
     <label for="NUEVO_TOTAL">TOTAL DESPUÉS DE LA OPERACIÓN</label>
-    <input type="number" id="NUEVO_TOTAL" class="inputGeneral" />
+    <input type="number" id="NUEVO_TOTAL" class="inputGeneral" disabled placeholder="0,00"/>
   </div>
 
 
