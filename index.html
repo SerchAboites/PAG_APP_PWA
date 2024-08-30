@@ -175,23 +175,18 @@
 
     // Construir la URL con los datos codificados
 
-    var datos = encodeURIComponent(JSON.stringify(datosModificados));
-    var url = "https://script.google.com/macros/s/AKfycbxo-3aRvlzmjABKUScaz146gTZhaiWYRyvsgaQ7G9FI9fZnTnR8bGMAXzDPGFVNjG6z/exec?datos=" + datos;
+    var datosSerializados = JSON.stringify(datosModificados); // Convierte el array a una cadena JSON
 
-    // Realizar la solicitud GET con 'no-cors'
-    fetch(url, { mode: 'no-cors' })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error en la solicitud');
-        }
-        // Como estamos en 'no-cors', no podemos leer la respuesta
-        console.log('Solicitud enviada con éxito');
-        ocultarCarga();    // Ocultar carga después de una respuesta exitosa
+    $.getJSON("https://script.google.com/macros/s/AKfycbxo-3aRvlzmjABKUScaz146gTZhaiWYRyvsgaQ7G9FI9fZnTnR8bGMAXzDPGFVNjG6z/exec", { datos: datosSerializados })
+      .done(function (data) {
+        console.log("Datos recibidos:", data);
+        // Procesa los datos recibidos
+        ocultarCarga();
       })
-      .catch(error => {
-        console.error('Error:', error);
-        ocultarCarga();    // Ocultar carga en caso de error
+      .fail(function (jqXHR, textStatus, errorThrown) {
+        console.error("Error al obtener datos:", textStatus, errorThrown);
       });
+
   }
 
 
@@ -252,7 +247,7 @@
 
   <div class="container">
     <label for="NUEVO_TOTAL">TOTAL DESPUÉS DE LA OPERACIÓN</label>
-    <input type="number" id="NUEVO_TOTAL" class="inputGeneral" disabled placeholder="0,00"/>
+    <input type="number" id="NUEVO_TOTAL" class="inputGeneral" disabled placeholder="0,00" />
   </div>
 
 
